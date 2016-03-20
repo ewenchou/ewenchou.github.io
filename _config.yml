@@ -1,0 +1,28 @@
+# Permalinks
+#
+# Use of `relative_permalinks` ensures post links from the index work properly.
+permalink:           pretty
+
+# Setup
+title:               ewen.chou
+tagline:             'echo chamber'
+description:         'The self-musings of a hacker dad. Made by <a href="https://twitter.com/ewenchou" target="_blank">@ewenchou</a>.'
+url:                 'https://ewenchou.github.io'
+baseurl:             ""
+paginate:            5
+
+# About/contact
+author:
+  name:              Ewen Chou
+  url:               https://twitter.com/ewenchou
+  email:             ewenchou@gmail.com
+
+github:              'https://github.com/ewenchou'
+
+# Custom vars
+version:             1.0.0
+
+# Gems
+gems:
+  - jekyll-paginate
+  - jekyll-gist

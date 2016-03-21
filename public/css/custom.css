@@ -1,3 +1,21 @@
 figure {
   margin: 0;
 }
+
+div.read-more {
+  text-align: right;
+  font-size: 18px;
+  font-family: "PT Sans", Helvetica, Arial, sans-serif;
+  padding: 15px 0 5px 0;
+}
+
+div.signature {
+  font-family: "PT Sans", Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  border-top: 1px solid #eee;
+  padding: 15px 0;
+}
+
+div.signature p {
+  margin: 3px 0;
+}

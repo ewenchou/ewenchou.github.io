@@ -2,7 +2,7 @@
 layout: post
 title: Chatting with Alexa
 categories: blog
-tags: festival alexa tts alexa-client simple-tts
+tags: festival alexa tts
 ---
 In a [previous post](/blog/2016/02/08/i-have-pi-now-what/) I mentioned my idea of using different triggers for Alexa. In particular, I didn't want to setup a hardware "push-to-talk" button. Now that I had [code](/blog/2016/03/20/alexa-voice-service/) to interact with Alexa Voice Service (AVS), I needed a way to generate the audio commands for the requests (instead of recording my voice for each command).
 
@@ -47,3 +47,5 @@ def tts(text, save_to=None):
 After some testing, I found that Alexa had some trouble understanding the default voice that is used by Festival. After some more Google-Fu, I was able to find some [information](http://ubuntuforums.org/showthread.php?t=677277) about installing additional voice packs for Festival. I tested several of the voice packs and found that the [CMU Arctic clb (US English female voice)](http://www.speech.cs.cmu.edu/cmu_arctic/packed/cmu_us_clb_arctic-0.95-release.tar.bz2) gave the best results.
 
 Here's the [TTS code](https://github.com/ewenchou/simple-tts), and a  [simple example](https://github.com/ewenchou/alexa-tts-demo) that shows how to tie it together with [alexa-client](https://github.com/ewenchou/alexa-client).
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/9JhDP1F_ho0" frameborder="0" allowfullscreen></iframe>

@@ -23,4 +23,6 @@ div.signature p {
 div.tag-list {
   display: inline-block;
   padding-left: 1.5em;
+  color: #bcbcbc;
+  font-family: "PT Sans", Helvetica, Arial, sans-serif;
 }

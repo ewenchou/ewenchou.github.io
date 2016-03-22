@@ -2,7 +2,7 @@
 layout: post
 title: Chatting with Alexa
 categories: blog
-tags: festival alexa tts
+tags: alexa tts festival github
 ---
 In a [previous post](/blog/2016/02/08/i-have-pi-now-what/) I mentioned my idea of using different triggers for Alexa. In particular, I didn't want to setup a hardware "push-to-talk" button. Now that I had [code](/blog/2016/03/20/alexa-voice-service/) to interact with Alexa Voice Service (AVS), I needed a way to generate the audio commands for the requests (instead of recording my voice for each command).
 

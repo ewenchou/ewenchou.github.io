@@ -3,10 +3,10 @@ figure {
 }
 
 div.read-more {
-  text-align: right;
   font-size: 18px;
   font-family: "PT Sans", Helvetica, Arial, sans-serif;
-  padding: 15px 0 5px 0;
+  padding: 2em 0 10px 0;
+  border-bottom: 1px solid #eee;
 }
 
 div.signature {
@@ -18,4 +18,9 @@ div.signature {
 
 div.signature p {
   margin: 3px 0;
+}
+
+div.tag-list {
+  display: inline-block;
+  padding-left: 1.5em;
 }

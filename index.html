@@ -12,15 +12,22 @@ title: Home
       </a>
     </h1>
 
-    <span class="post-date">{{ post.date | date_to_string }}</span>
+    <div class="post-date">
+      {{ post.date | date_to_string }}
+      <div class="tag-list">
+        <i class="fa fa-tag"></i>
+        {% for tag in post.tags %}{{ tag }}{% if forloop.last == false %}, {% endif %}{% endfor %}
+      </div>
+    </div>
 
     {{ post.content | truncatewords:80 }}
 
 
     <div class="read-more">
       <a href="{{ site.baseurl }}{{ post.url }}">
-        Read More
+        Read&nbsp;Post&nbsp;<i class="fa fa-angle-double-right"></i>
       </a>
+
     </div>
   </div>
   {% endfor %}

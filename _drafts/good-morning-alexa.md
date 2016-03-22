@@ -2,7 +2,7 @@
 layout: post
 title: Good Morning, Alexa
 categories: blog
-tags: alexa raspberry-pi
+tags: alexa
 ---
 I included some [example code](https://github.com/ewenchou/alexa-tts-demo) in my [last post]({{ site.baseurl }}/blog/2016/03/21/chatting-with-alexa/) to demonstrate how to interact with Alexa programmatically. This gave me the building blocks needed to build one of my ideas, a program that will greet me in the morning with useful information.
 
@@ -91,4 +91,6 @@ Having to open the Alexa app and changing the destination address every time is 
 
 So again, looks like getting the traffic information I want is going to take more work.
 
-Stay tuned for my next posts to see how I solved each one of these requirements, and thanks for reading.
+## Coming Soon
+
+Stay tuned for my next posts to see how I solved each one of my morning requirements. Thanks again for reading.

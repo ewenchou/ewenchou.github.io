@@ -29,3 +29,10 @@ div.tag-list {
   font-size: 18px;
   letter-spacing: 0;
 }
+
+.post-note {
+  color: #9c9c9c;
+  font-family: "PT Sans", Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  margin: 10px 10px 20px;
+}

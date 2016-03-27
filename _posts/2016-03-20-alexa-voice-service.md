@@ -6,6 +6,10 @@ tags: alexa github
 ---
   > TL;DR: Amazon's Alexa is cool. I wrote some [code](https://github.com/ewenchou/alexa-client) to talk to it.
 
+## Updated: March 27, 2016
+
+Amazon has released a [very good demo and guide](https://github.com/amzn/alexa-avs-raspberry-pi) for turning a Raspberry Pi into an Alexa Voice Service device on Github. In particular, the  [README](https://github.com/amzn/alexa-avs-raspberry-pi/blob/master/README.md) file has very detailed sections on how to [setup your Raspberry Pi](https://github.com/amzn/alexa-avs-raspberry-pi/blob/master/README.md#0---setting-up-the-raspberry-pi) and how to [get started](https://github.com/amzn/alexa-avs-raspberry-pi/blob/master/README.md#3---getting-started-with-alexa-voice-service) with Alexa Voice Service, which I did not cover in detail in the post below. I encourage everyone interested in AVS to read through their demo repository (I did!).
+
 ## Preamble
 
 So my [last post](/blog/2016/02/08/i-have-pi-now-what/) was well over a month ago *(oops)*. There were a lot of late nights and weekend hacking sessions (as my beautiful wife can attest to, sorry babe :D), some frustration, a lot of trial-and-error, and many iterations of code. Long story short... I can't really remember everything that I did *(oops again)*.

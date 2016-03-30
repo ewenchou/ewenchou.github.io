@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Alexa Skills Kit
+title: All You Gotta Do, is ASK
 categories: blog
-tags: alexa alexa-skills-kit getting-started
+tags: alexa alexa-skills-kit ask aws lambda getting-started
 ---
 In my [previous post]({{ site.baseurl }}/blog/2016/03/25/good-morning-alexa/), I talked about the things I usually check in the morning on my smartphone and my idea for building a greeter program that would run on a Raspberry Pi and read me the information.
 
@@ -20,7 +20,7 @@ To get started with ASK, you will need to have a developer account with Amazon. 
 
 Next, click on *Apps & Services* in the navigation menu across the top of the page and then click on *Alexa* in the sub-menu. You will see two "Get Started" sections for *Alexa Skills Kit* and [*Alexa Voice Service*]({{ site.baseurl }}/blog/2016/03/20/alexa-voice-service/). Click on the one for ASK.
 
-![01]({{ site.baseurl }}/images/2016-03/ask-01.png)
+![01]({{ site.baseurl }}/images/2016-03/amazon-dev-ask.png)
 
 You should see a list of your Skills (empty for now), and some useful links to help you get started. I highly recommend reading through [Getting Started with the Alexa Skills Kit](https://developer.amazon.com/appsandservices/solutions/alexa/alexa-skills-kit/getting-started-guide) to get familiar with the terminology and how things fit together in general.
 
@@ -33,3 +33,37 @@ Creating an Alexa Skill using Lambda is very easy. First you'll need to create a
 </div>
 
 Lambda provides a [free tier](https://aws.amazon.com/lambda/pricing/) that is more than adequate for my purposes. I don't expect any of my skills to be executed millions of times per month, nor will they consume a lot of compute time.
+
+Once you have signed into the AWS Console, make sure you have selected the *US East (N. Virginia)* region in the top-right corner because it is the only one that supports ASK right now.
+
+![US East]({{ site.baseurl }}/images/2016-03/lambda-region.png)
+
+Click on the *Lambda* link to bring up your list of Lambda functions. Now click the *Create a Lambda function* button to get started.
+
+Step 1: Select blueprint: Click the *alexa-skills-kit-color-expert-python* blueprint.
+
+![Lambda blueprint]({{ site.baseurl }}/images/2016-03/lambda-blueprint.png)
+
+Step 2: Configure event sources: For *Event source type* select *Alexa Skills Kit* and click *Next*.
+
+![Lambda event source]({{ site.baseurl }}/images/2016-03/lambda-event-source.png)
+
+Step 3: Configure function
+
+Enter a name for your new Lambda function.
+
+![Lambda configure function]({{ site.baseurl }}/images/2016-03/lambda-configure-function.png)
+
+Because a blueprint was selected earlier, the Lambda function code is already prepopulated. This is the code that makes up the *Color Expert* skill. It is well documented and it was quite easy for me to figure out how to make my own skills using it as, well... a blueprint :)
+
+![Lambda role]({{ site.baseurl }}/images/2016-03/lambda-role.png)
+
+![Lambda execution role]({{ site.baseurl }}/images/2016-03/lambda-exec-role.png)
+
+![Lambda configure function part 2]({{ site.baseurl }}/images/2016-03/lambda-configure-function-2.png)
+
+![Lambda review]({{ site.baseurl }}/images/2016-03/lambda-review.png)
+
+Click *Create function*
+
+![Lambda ARN]({{ site.baseurl }}/images/2016-03/lambda-arn.png)

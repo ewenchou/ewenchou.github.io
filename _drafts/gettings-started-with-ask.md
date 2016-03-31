@@ -2,7 +2,7 @@
 layout: post
 title: All You Need to Do is ASK
 categories: blog
-tags: alexa alexa-skills-kit ask aws lambda getting-started
+tags: alexa alexa-skills-kit ASK AWS lambda walkthrough
 ---
 In my [previous post]({{site.baseurl}}/blog/2016/03/25/good-morning-alexa/), I talked about the things I usually check in the morning on my smartphone and my idea for building a greeter program that would run on a Raspberry Pi and read me the information.
 
@@ -16,39 +16,41 @@ Fortunately, Amazon has made the Alexa Skills Kit (ASK) available to developers 
 
  > The Alexa Skills Kit is a collection of self-service APIs, tools, documentation and code samples that make it fast and easy for you to add skills to Alexa. All of the code runs in the cloud – nothing is on any user device.
 
-This post will walkthrough how to get started with Amazon ASK, setting up an example skill in AWS Lambda and connecting it with our Alexa device.
+This post will walkthrough how to get started with ASK, setting up an example skill in AWS Lambda, and connecting it with your Alexa device.
 
 ## Getting Started
 
-To get started with ASK, you will need to have a developer account with Amazon. This is super-easy (especially if you already have an Amazon account for shopping/apps/etc), you just need to visit the [Amazon Developers](https://developer.amazon.com) page and sign-up/activate an account.
+To get started developing with ASK, you will need an Amazon developer account. This is super-easy (especially if you already have an Amazon account for shopping/apps/etc), you just need to visit the [Amazon Developers](https://developer.amazon.com) page and sign-up/activate a free account.
 
-Next, click on *Apps & Services* in the navigation menu across the top of the page and then click on *Alexa* in the sub-menu. You will see two "Get Started" sections for *Alexa Skills Kit* and [*Alexa Voice Service*]({{site.baseurl}}/blog/2016/03/20/alexa-voice-service/).
+Once you're signed in, click on *Apps & Services* in the navigation menu across the top of the page. Then, click on *Alexa* in the sub-menu. You will see two *Get Started* buttons, one for *Alexa Skills Kit* and the other for [*Alexa Voice Service*]({{site.baseurl}}/blog/2016/03/20/alexa-voice-service/).
 
 ![01]({{site.baseurl}}/images/2016-03/amazon-dev-ask.png)
 
-We'll come back to the ASK page later after we've setup our AWS Lambda function.
+We'll come back to this page later after we've setup an Alexa skill as an AWS Lambda function.
 
 ## AWS Lambda
 
-Creating an Alexa Skill using Lambda is very easy. First you'll need to create an Amazon Web Services (AWS) account. Again, if you already have an Amazon account this is very straightforward and similar to the Developer Account you created earlier. Just visit the [AWS page](https://aws.amazon.com) and click on *Create an AWS Account*. If you already have an Amazon account, sign-in using your usual credentials. Read through and follow their instructions to get your AWS account setup.
+Creating an Alexa Skill using Lambda is very easy. First, you'll need an account with [Amazon Web Services (AWS)](https://aws.amazon.com). Click on *Create an AWS Account* and follow the instructions. If you already have an Amazon account, sign-in using your usual credentials.
 
 <div class="post-note">
-<b>NOTE:</b> Amazon will ask you for billing information. You should read through the details and decide whether AWS is the appropriate solution for you to host your Alexa Skills. You <b><u>do not</u></b> need to use AWS Lambda to create and host Alexa Skills. The getting started guide linked above has information on how to create your own web service/application for Alexa Skills so you can host it anywhere you want.
+<b>NOTE:</b> As part of setting up an AWS account, Amazon will ask you for billing information. You should read through the details and decide whether AWS is the appropriate solution for you to host your Alexa Skills. You <b><u>do not</u></b> need to use AWS Lambda to create and host Alexa Skills. Amazon provides <a href="https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/developing-an-alexa-skill-as-a-web-service">information</a> on how to develop an Alexa Skill as your own web service.
 </div>
 
 Lambda provides a [free tier](https://aws.amazon.com/lambda/pricing/) that is more than adequate for my purposes. I don't expect any of my skills to be executed millions of times per month, nor will they consume a lot of compute time.
 
-Once you have signed into the AWS Console, make sure you have selected the *US East (N. Virginia)* region in the top-right corner of th epage because it is the only one that supports ASK right now.
+Once you have signed into the AWS Console, make sure you have selected the *US East (N. Virginia)* region in the top-right corner of the page because it is the only one that supports ASK right now.
 
 ![Lambda region]({{site.baseurl}}/images/2016-03/lambda-region.png)
 
-On the same page, you'll see all the AWS services listed. Near the top-right of the page you should see the *Compute* services. Click on the *Lambda* link to bring up your list of Lambda functions, and then click the *Create a Lambda function* button to get started.
+On the same page, you'll see all the AWS services listed. Near the top-left of the page you should see the *Compute* services.
 
 ![Lambda link]({{site.baseurl}}/images/2016-03/lambda-link.png)
 
+Click on the *Lambda* link and then click the *Create a Lambda function* button to get started.
+
 ### Step 1: Select blueprint
 
-Blueprints are predefined Lambda functions that help you learn how to create your own. There are a few ASK blueprints to choose from and you can type in *alexa* in the *Filter* field to find them. Click the *alexa-skills-kit-color-expert-python* blueprint to select it.
+Blueprints are predefined Lambda functions that help you learn how to create your own. There are a few blueprints for ASK and you can type in *alexa* in the *Filter* field to find them. Click the *alexa-skills-kit-color-expert-python* blueprint to select it.
 
 ![Lambda blueprint]({{site.baseurl}}/images/2016-03/lambda-blueprint.png)
 
@@ -64,30 +66,34 @@ Here is where you specify the code and some parameters for your Lambda function.
 
 ![Lambda configure function]({{site.baseurl}}/images/2016-03/lambda-configure-function.png)
 
-Because we selected a blueprint earlier, the code is already populated for us. This is the code that makes up the *Color Expert* skill. It is well documented and was pretty easy for me to figure out what it does and how to make my own skills.
+Because we selected a blueprint earlier, the code is already populated for us. This is the code that makes up the *Color Expert* skill. It is well documented with comments so it was pretty easy to figure out what it does (and how to write my own skills). I recommend reading through it to get a general understanding of how it works.
 
-Below the code section, you will need to specify a couple more parameters.
+Below the code section, you will need to specify a few more parameters.
 
 ![Lambda role]({{site.baseurl}}/images/2016-03/lambda-role.png)
 
 __Handler__
 
-This is the name of the file plus the entry point for your Lambda function. Together it tells Lambda what to run when your function is invoked. It is already predefined for the blueprint as `lambda_function.lambda_handler`, where the Python file name is `lambda_function.py` and the entry function is `lambda_handler()`.
+This is the name of the file plus the entry point for your Lambda function. Together it tells Lambda what to run when your function is invoked. It is already predefined for the blueprint as `lambda_function.lambda_handler`, which means on invocation it will run the `lambda_handler()` function in the `lambda_function.py` file.
 
-*Note: You can change the Handler to whatever you want as long as it matches up with your code, but it's easier to stick with these conventions, even when writing your own code and uploading as a zip.*
+*Note: You can change the Handler to whatever you want as long as it matches up with your code. In general, it's easier to stick with these conventions when writing your own code and uploading as a zip.*
 
 __Role__
 
 For Alexa Skills, you only need a *Basic execution role*. Selecting it under *Create new role* will allow you to create a reusable role that you can select.
 
+<hr/>
+
 ![Lambda execution role]({{site.baseurl}}/images/2016-03/lambda-exec-role.png)
+
+<hr/>
 
 __Advanced Settings__
 
 Now that you've specified the *Handler* and *Role* you can also configure the *Advanced Settings*. The default values should be adequate for the majority of Alexa skills. Once you've reviewed your settings, click *Next* to continue.
 
 <div class="post-note">
-  <b>Note:</b> The amount of Memory affects how much you are billed (and uses up your free tier's allotment faster). So it's a good idea to select the lowest memory amount available (128 MB) which is plenty for the majority of Alexa skills which are very simple.
+  <b>Note:</b> The amount of Memory affects how much you are billed (and uses up your free tier's allotment faster). So it's a good idea to select the lowest memory amount available (128 MB). It should be plenty for the majority of simple Alexa skills.
 </div>
 
 ![Lambda configure function part 2]({{site.baseurl}}/images/2016-03/lambda-configure-function-2.png)
@@ -104,7 +110,7 @@ Congratulations! You've created your first AWS Lambda function. Copy the *ARN* s
 
 ### Billing Alarm
 
-Although the free tier should be enough for personal use, it's a good idea to setup an Alarm in AWS that will send you an email if/when you start getting charged for usage (just in case).
+Although the free tier should be enough for personal use, it's a good idea to setup an Alarm in AWS that will send you an email if you start getting charged for usage (just in case).
 
 <div class="post-note">
   <b>Warning:</b> I'm new to AWS so there may be better ways to monitor your billing than what I outline below. This is just what I found and setup for myself.
@@ -138,9 +144,118 @@ Click the *Create Alarm* button to finish.
 
 ![Create alarm]({{site.baseurl}}/images/2016-03/aws-alarms-create.png)
 
+## Alexa Skills Kit
 
-I highly recommend reading through [Getting Started with the Alexa Skills Kit](https://developer.amazon.com/appsandservices/solutions/alexa/alexa-skills-kit/getting-started-guide) to get familiar with the terminology and how things fit together in general.
+Back on the [Amazon Developer](https://developer.amazon.com) site, click on the *Get Started* link for Alexa Skills Kit from [earlier](#getting-started) in this post. This will bring up your list of Alexa Skills. Click on the *Add a New Skill* button.
 
-The rest of this post will talk about how to create a Skill and host it using Amazon's Lambda service. So it's probably a good idea to also read [Developing an Alexa Skill as a Lambda Function](https://developer.amazon.com/appsandservices/solutions/alexa/alexa-skills-kit/docs/developing-an-alexa-skill-as-a-lambda-function).
-Click on the one for ASK.
-You should see a list of your Skills (empty for now), and some useful links to help you get started.
+### Skill Information
+
+Fill in the *Name* and *Invocation Name* fields. These can be anything you want. The *Invocation Name* is what users will say to launch your skill. For example, if you use an invocation name of *"color picker"*, you would say,
+
+> "Alexa, open color picker"
+
+![New Alexa Skill]({{site.baseurl}}/images/2016-03/ask-1.png)
+
+The *Endpoint* field is where you put the ARN string you copied [earlier](#step-4-review). Make sure to select the *Lambda ARN* radio button as well.
+
+Click the *Next* button to continue.
+
+### Interaction Model
+
+On the next screen, you will need to provide the *Intent Schema*, *Sample Utterances* and (optionally) any *Custom Slot Types* that are used for your skill.
+
+For the Color Expert blueprint,
+
+__Intent Schema__
+
+{% highlight json %}
+{
+  "intents": [
+    {
+      "intent": "MyColorIsIntent",
+      "slots": [
+        {
+          "name": "Color",
+          "type": "LIST_OF_COLORS"
+        }
+      ]
+    },
+    {
+      "intent": "WhatsMyColorIntent"
+    },
+    {
+      "intent": "AMAZON.HelpIntent"
+    }
+  ]
+}
+{% endhighlight %}
+
+__Custom Slot Types__
+
+Create a type called `LIST_OF_COLORS`
+
+<pre>
+green
+red
+blue
+orange
+gold
+silver
+yellow
+black
+white
+</pre>
+
+__Sample Utterances__
+
+<pre>
+WhatsMyColorIntent what's my favorite color
+WhatsMyColorIntent what is my favorite color
+WhatsMyColorIntent what's my color
+WhatsMyColorIntent what is my color
+WhatsMyColorIntent my color
+WhatsMyColorIntent my favorite color
+WhatsMyColorIntent get my color
+WhatsMyColorIntent get my favorite color
+WhatsMyColorIntent give me my favorite color
+WhatsMyColorIntent give me my color
+WhatsMyColorIntent what my color is
+WhatsMyColorIntent what my favorite color is
+WhatsMyColorIntent yes
+WhatsMyColorIntent yup
+WhatsMyColorIntent sure
+WhatsMyColorIntent yes please
+MyColorIsIntent my favorite color is {Color}
+</pre>
+
+*Note: You can find more details from Amazon's documentation on [Developing an Alexa Skill as a Lambda Function](https://developer.amazon.com/appsandservices/solutions/alexa/alexa-skills-kit/docs/developing-an-alexa-skill-as-a-lambda-function). It covers some of the steps we went through earlier and provides additional information.*
+
+Click the *Save* button. The Amazon service will take some time to build the interaction model for the skill. Once it is done, it is ready for testing!
+
+![Interaction Model]({{site.baseurl}}/images/2016-03/ask-2.png)
+
+### Testing
+
+Clicking on the *Test* link in the left menu will bring you to Amazon's built-in testing page for Alexa Skills. This is the fastest way to test the interaction with your skill, and it doesn't even require an actual Alexa device.
+
+Simply type the command you want to send to the Skill (as if you were speaking it) and click the *Ask* button to test.
+
+![Testing your skill]({{site.baseurl}}/images/2016-03/ask-3.png)
+
+It will show you the JSON payloads for both the Lambda request and response, and you can click the "play" button to listen to Alexa's response (cool!)
+
+I spent more time than I care to admit playing around on this page :D
+
+At this point, you can also interact with your skill using any Alexa device that you have linked to your Amazon account. All the skills that are in *Development* status are available to you on your Amazon account and you can see them in the *Skills* section of the Alexa mobile or [web](http://alexa.amazon.com) apps.
+
+That's it! You've created your first Alexa Skill using Lambda and hooked it up to your developer account.
+
+## What's Next?
+
+Wow, this post is a lot longer (and took much more time to write) than I originally anticipated. So I'll write about the Alexa Skills I created for my ["morning greeter"]({{site.baseurl}}/blog/2016/03/25/good-morning-alexa/) project in a future post.
+
+For now, I highly recommend reading through [Getting Started with the Alexa Skills Kit](https://developer.amazon.com/appsandservices/solutions/alexa/alexa-skills-kit/getting-started-guide) to get a better understanding of how things fit together.
+
+I hope this information was useful and will help you get started developing your own Alexa Skills.
+
+As always, thank you for reading and keep an eye out for my next blog post.

@@ -115,8 +115,6 @@ Inside the for loop, I'll extract the info that I want:
 * Is the stock up/down?
 * What's the price?
 
-And convert it into speech-friendly output for Alexa.
-
 The name of the company can contain some extra text that's not needed. Some simple string replacement is done to clean it up:
 
 {% highlight python %}
@@ -128,7 +126,7 @@ The name of the company can contain some extra text that's not needed. Some simp
     name = name.strip()
 {% endhighlight %}
 
-The change percentage is a positive/negative floating point number, but it's returned as a string:
+The change percentage is a positive/negative floating point number, but it's returned as a string. The code below will translate the +/- into text and do some type conversion, rounding, and cleanup:
 
 {% highlight python %}
 # This is a string
@@ -143,7 +141,6 @@ else:
 # Convert string to decimal number, get the absolute value, and round to one decimal place
 change = round(abs(decimal.Decimal(change)), 1)
 
-# Check if there is a non-zero change
 if change == 0:
     spoken_change = "is trading at"
 else:
@@ -169,4 +166,4 @@ spoken = "{name} {change} {price}.".format(
     name=name, change=spoken_change, price=spoken_price)
 {% endhighlight %}
 
-You can find the full code for the skill in my [Github repository](https://github.com/ewenchou/alexa-stock-quotes).
+You can find the code for the full skill in my [Github repository](https://github.com/ewenchou/alexa-stock-quotes).

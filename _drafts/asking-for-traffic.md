@@ -49,11 +49,11 @@ Now I needed to adapt the above code for use with an Alexa skill.
 
 First, I wrote down how I wanted to interact with this skill (which got expanded into sample utterances later).
 
-> How's traffic to work?
+* How's traffic to work?
+* How's traffic to work for Bob?
+* How's traffic to school from home?
 
-> How's traffic to work for Bob?
-
-First, I designed the intent schema for my skill.
+Next, I designed the intent schema for my skill.
 
 {% highlight json %}
 {
@@ -85,8 +85,46 @@ First, I designed the intent schema for my skill.
 }
 {% endhighlight %}
 
-I want to be able to ask for traffic times to different places for various people. To do this, I only needed one `GetTrafficIntent` intent but with multiple slots.
+I only needed one `GetTrafficIntent` intent but with multiple slots.
 
-* `Person`: This is the name of the person for which to get traffic times
-* `Start`: This is the name of the starting place
-* `Destination`: This is the name of the destination place
+* `Person`: This is the name of the person for which to get traffic times (optional, with default)
+* `Start`: This is the name of the starting place (optional)
+* `Destination`: This is the name of the destination place (required)
+
+{% highlight python %}
+# Dictionary mapping names of people to their addresses.
+# Customize with your own values.
+PEOPLE_AND_PLACES = {
+    "Ewen": {
+        "work": {
+            "address": "3 W. Plumeria Dr, San Jose, CA 95131",
+            "start": "home"
+        },
+        "home": {
+            "address": "4451 Cherico Ln, Dublin, CA 94568",
+            "start": "work"
+        },
+        "school": {
+            "address": "11900 Silvergate Dr, Dublin, CA 94568",
+            "start": "home"
+        }
+    },
+    "Venus": {
+        "work": {
+            "address": "2527 Camino Ramon, San Ramon, CA 94583",
+            "start": "home"
+        },
+        "home": {
+            "address": "4451 Cherico Ln, Dublin, CA 94568",
+            "start": "work"
+        },
+        "school": {
+            "address": "11900 Silvergate Dr, Dublin, CA 94568",
+            "start": "work"
+        }
+    }
+}
+
+# Default if skill is launched without specifying a person
+DEFAULT_PERSON = "Ewen"
+{% endhighlight %}

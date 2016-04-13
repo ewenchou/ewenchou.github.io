@@ -2,7 +2,7 @@
 layout: post
 title: ASKing for Traffic
 categories: blog
-tags: alexa alexa-skills-kit ASK AWS lambda python
+tags: google-maps alexa alexa-skills-kit ASK AWS lambda python
 ---
 Now that we have ways to get the [weather]({{site.baseurl}}/blog/2016/03/25/good-morning-alexa#weather-report), [news]({{site.baseurl}}/blog/2016/04/05/asking-for-news/), and [stock quotes]({{site.baseurl}}/blog/2016/04/08/asking-for-stocks/), the last piece of information needed for my ["morning greeter"]({{site.baseurl}}/blog/2016/03/25/good-morning-alexa) program is the [traffic]({{site.baseurl}}/blog/2016/03/25/good-morning-alexa#traffic-conditions).
 
@@ -53,7 +53,11 @@ First, I wrote down how I wanted to interact with this skill (which got expanded
 * How's traffic to work for Bob?
 * How's traffic to school from home?
 
-Next, I designed the intent schema for my skill.
+Next, I designed the intent schema for my skill. I used one intent with multiple slots:
+
+* `Person`: This is the name of the person for which to get traffic times (optional, with a default value)
+* `Start`: This is the name of the starting place (optional)
+* `Destination`: This is the name of the destination place (required)
 
 {% highlight json %}
 {
@@ -85,46 +89,65 @@ Next, I designed the intent schema for my skill.
 }
 {% endhighlight %}
 
-I only needed one `GetTrafficIntent` intent but with multiple slots.
+The `Person` slot uses the built-in `AMAZON.US_FIRST_NAME` slot type. You can optionally extend these built-in slot types with your own values (useful for people, like me, who have uncommon names).
 
-* `Person`: This is the name of the person for which to get traffic times (optional, with default)
-* `Start`: This is the name of the starting place (optional)
-* `Destination`: This is the name of the destination place (required)
+The `Start` and `Destination` slots use a custom slot type `LIST_OF_PLACES` which is just a list of names for the predefined places the skill will support.
+
+Both of these slots can be configured in the *Interaction Model* section of your Alexa skill in Amazon's developer portal.
+
+<div class="post-note">
+<b>Psst...</b> In case you missed it, I wrote a <a href="/blog/2016/03/31/all-you-need-to-do-is-ask/">blog post</a> that walks through how to create an Alexa Skill using the developer portal and AWS Lambda.
+</div>
+
+The skill will have the people and places predefined so that you can say the name of the place instead of the address.
+
+Here's the sample data as an example:
 
 {% highlight python %}
 # Dictionary mapping names of people to their addresses.
 # Customize with your own values.
 PEOPLE_AND_PLACES = {
-    "Ewen": {
+    "Mark": {
         "work": {
-            "address": "3 W. Plumeria Dr, San Jose, CA 95131",
+            "address": "1 Hacker Way, Menlo Park, CA 94025",
             "start": "home"
         },
         "home": {
-            "address": "4451 Cherico Ln, Dublin, CA 94568",
+            "address": "3660 21st St, San Francisco, CA 94114",
             "start": "work"
-        },
-        "school": {
-            "address": "11900 Silvergate Dr, Dublin, CA 94568",
-            "start": "home"
         }
     },
-    "Venus": {
+    "Tim": {
         "work": {
-            "address": "2527 Camino Ramon, San Ramon, CA 94583",
+            "address": "1 Infinite Loop, Cupertino, CA 95014",
             "start": "home"
         },
         "home": {
-            "address": "4451 Cherico Ln, Dublin, CA 94568",
+            "address": "Webster St, Palo Alto, CA ",
             "start": "work"
         },
-        "school": {
-            "address": "11900 Silvergate Dr, Dublin, CA 94568",
-            "start": "work"
+        "cafe": {
+             "address": "10591 N De Anza Blvd, Cupertino, CA 95014",
+             "start": "work"
         }
     }
 }
 
 # Default if skill is launched without specifying a person
-DEFAULT_PERSON = "Ewen"
+DEFAULT_PERSON = "Mark"
 {% endhighlight %}
+
+The `PEOPLE_AND_PLACES` dictionary maps the names of people to the names of places. Each place has an address and the name of its default starting place. I've also defined the `DEFAULT_PERSON` to use if the skill does not receive a value in the intent.
+
+This allows different combinations of spoken commands (utterances) like the following:
+
+```
+How's the traffic to {Destination}
+How's the traffic to {Destination} for {Person}
+How's the traffic to {Destination} from {Start}
+How's the traffic to {Destination} from {Start} for {Person}
+```
+
+The rest of the code involves extracting the value(s) from the slots and setting up some speech-friendly output which I will not cover in detail here. But, the code for the full skill can be found in my [Github](https://github.com/ewenchou/alexa-traffic-time) and there are comments throughout and is quite easy to understand. Feel free to take it for a test drive :)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/6s4xeIsxv4o" frameborder="0" allowfullscreen></iframe>
